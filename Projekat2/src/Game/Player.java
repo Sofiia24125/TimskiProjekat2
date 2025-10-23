@@ -1,6 +1,6 @@
 package Game;
 
-class Player {
+public class Player {
     private String name;
     private int x;
     private int y;
@@ -53,5 +53,21 @@ class Player {
     public String toString() {
         return "Player{name='" + name + "', x=" + x + ", y=" + y +
                ", width=" + width + ", height=" + height + ", health=" + health + "}";
+    }
+    
+    public int getX()
+    {
+    	return x;
+    	
+    }
+    public int getY()
+    {
+    	return y;
+    	
+    }
+    public int getHealth()
+    {
+    	return health;
+    	
     }
 }

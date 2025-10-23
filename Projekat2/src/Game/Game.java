@@ -4,46 +4,48 @@ import java.util.ArrayList;
 
 public class Game {
 
-	private Player player;
-	private ArrayList<Enemy> enemies = new();
-	private ArrayList<String> eventLog = new();
+	private static Player player;
+	private static ArrayList<Enemy> enemies = new ArrayList<>();
+	private static ArrayList<String> eventLog = new ArrayList<>();
 	
 	public static void main(String[] args) {
 		player = new Player("bo b", 1, 1);
 		
-		enemies.add(new Enemy());
+		enemies.add(new Enemy("Goblin", 1,1,10,15,25));
 		enemies.add(new Enemy("Goblin;12;5;16x16;20"));
 
+		resolveCollsions();
+		
 	}
 	
 	private boolean checkCollision(Player p, Enemy e)
 	{
-		return (p.x == e.x && p.y == e.y);
+		return (p.getX() == e.getX() && p.getY() == e.getY());
 
 	}
 	private void decreaseHealth(Player p, Enemy e)
 	{
-		int startHealth = p.health;
-		int newHealth = p.health - e.damage;
+		int startHealth = p.getHealth();
+		int newHealth = p.getHealth() - e.getHealth();
 		
-		p.health = newHealth >= 0 ? newHealth : 0;
-		eventLog.add("Hit:Player by " + e.type + " for " +  e.damage + " -> HP " + startHealth + "->" + p.health);
+		startHealth = newHealth >= 0 ? newHealth : 0;
+		eventLog.add("Hit:Player by " + e.getType() + " for " +  e.getDamage() + " -> HP " + startHealth + "->" + p.getHealth());
 		
 	}
 	private void addEnemy(Enemy e)
 	{
-		enemies.Add(e);
-		eventLog.add("New enemy: " + e.type);
+		enemies.add(e);
+		eventLog.add("New enemy: " + e.getType());
 		
 	}
 	private ArrayList<Enemy> findByType(String query)
 	{
-		arrayList<Enemy> findedEnemies = new();
+		ArrayList<Enemy> findedEnemies = new ArrayList<>();
 		query = query.toLowerCase();
 		
 		for (Enemy e: enemies)
 		{
-			if(e.type == query)
+			if(e.getType() == query)
 				findedEnemies.add(e);
 			
 		}
@@ -53,7 +55,7 @@ public class Game {
 	}
 	private ArrayList<Enemy> collidingWithPlayer()
 	{
-		ArrayList<Enemy> findedEnemies = new();
+		ArrayList<Enemy> findedEnemies = new ArrayList<>();
 
 		for (Enemy e: enemies)
 		{
