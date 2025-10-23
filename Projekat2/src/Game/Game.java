@@ -4,17 +4,30 @@ import java.util.ArrayList;
 
 public class Game {
 
-	private static Player player;
-	private static ArrayList<Enemy> enemies = new ArrayList<>();
-	private static ArrayList<String> eventLog = new ArrayList<>();
+	private Player player;
+	private ArrayList<Enemy> enemies = new ArrayList<>();
+	private ArrayList<String> eventLog = new ArrayList<>();
+	
+	public Game(Player player, ArrayList<Enemy> enemies,  ArrayList<String>eventLog)
+	{
+		this.player = player;
+		this.enemies = enemies;
+		this.eventLog = eventLog;
+	}
 	
 	public static void main(String[] args) {
-		player = new Player("bo b", 1, 1);
+		Player newPlayer = new Player("bo b", 1, 1);
+		
+		ArrayList<Enemy> enemies = new ArrayList<>();
 		
 		enemies.add(new Enemy("Goblin", 1,1,10,15,25));
-		enemies.add(new Enemy("Goblin;12;5;16x16;20"));
+		enemies.add(new Enemy("Goblin;12;5;16;16;20"));
+		enemies.add(new Enemy("Goblin;1;1;16;16;4"));
 
-		resolveCollsions();
+		Game game = new Game(newPlayer, enemies, new ArrayList<>());
+		game.resolveCollsions();
+		game.printEventLog();
+		
 		
 	}
 	
@@ -28,7 +41,7 @@ public class Game {
 		int startHealth = p.getHealth();
 		int newHealth = p.getHealth() - e.getHealth();
 		
-		startHealth = newHealth >= 0 ? newHealth : 0;
+		p.setHealth(newHealth >= 0 ? newHealth : 0);
 		eventLog.add("Hit:Player by " + e.getType() + " for " +  e.getDamage() + " -> HP " + startHealth + "->" + p.getHealth());
 		
 	}
@@ -67,11 +80,19 @@ public class Game {
 		return findedEnemies;
 
 	}
-	private void resolveCollsions()
+	public void resolveCollsions()
 	{
 		for (Enemy e: collidingWithPlayer())
 		{
 			decreaseHealth(player, e);
+		}
+	}
+	public void printEventLog()
+	{
+		for(String s: eventLog)
+		{
+			System.out.println(s);
+
 		}
 	}
 

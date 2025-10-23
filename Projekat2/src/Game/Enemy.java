@@ -22,7 +22,17 @@ public class Enemy{
 				this.damage = Math.max(0, damage);
 						
 			}
-			
+			public Enemy(String pars)
+			{
+		        String[] parts = pars.split(";");
+				
+				this.type = parts[0].trim();
+				this.x = Integer.parseInt(parts[1]);
+				this.y = Integer.parseInt(parts[2]);
+				this.width = Integer.parseInt(parts[3]);
+				this.heigth = Integer.parseInt(parts[4]);
+				this.damage = Math.max(0, Integer.parseInt(parts[5]));
+			}
 			public String getType() {
 				return type;
 			}
